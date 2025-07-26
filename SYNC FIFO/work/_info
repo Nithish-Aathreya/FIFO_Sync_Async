@@ -1,0 +1,55 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dF:/Verilog_Assgn/A14. FIFO Coding/SYNC FIFO
+vfifo_design
+Z1 !s110 1752639919
+!i10b 1
+!s100 RZ]O0V]XAWkh^am7BU_;<0
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IeQd`PKN9ni^Nb;TBI`o4]0
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1752586728
+8fifo_design.v
+Ffifo_design.v
+!i122 61
+L0 1 88
+Z4 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z5 !s108 1752639919.000000
+!s107 fifo_design.v|tb.v|
+Z6 !s90 -reportprogress|300|tb.v|
+!i113 1
+Z7 tCvgOpt 0
+vtb
+R1
+!i10b 1
+!s100 lTkB8djM1n1l_EDi^Tle43
+R2
+I916EloDSB^aVLUkS?c?1W0
+R3
+R0
+w1752639915
+8tb.v
+Ftb.v
+!i122 61
+L0 3 111
+R4
+r1
+!s85 0
+31
+R5
+Z8 !s107 fifo_design.v|tb.v|
+R6
+!i113 1
+R7
