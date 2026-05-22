@@ -1,0 +1,2 @@
+-	Designed parameterized Synchronous and Asynchronous FIFOs (depth: 16, width: 8-bit) with full/empty flag logic, gray-code pointer synchronization for clock domain crossing (Async FIFO).
+-	Verified edge cases including simultaneous read/write, FIFO overflow and underflow condition.
