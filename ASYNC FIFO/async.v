@@ -1,25 +1,31 @@
 module async(wr_clk,rd_clk, rst, data_i, data_o, wr_valid, rd_valid, fifo_full, fifo_empty, error);
 
-parameter WIDTH=8;
-parameter DEPTH=16; 
-parameter PTR_WIDTH=$clog2(DEPTH); 
+parameter WIDTH=8;//width of fifo 
+parameter DEPTH=16;//depth of fifo 
+parameter PTR_WIDTH=$clog2(DEPTH);//address to fifo locations 
 
-
+//ASYNC design = write and read clocks
 input wr_clk,rd_clk,rst;
-input [WIDTH-1:0]data_i;
-output reg[WIDTH-1:0]data_o;
-input wr_valid,rd_valid;
-output reg fifo_full,fifo_empty,error;
+input [WIDTH-1:0]data_i;//data input
+output reg[WIDTH-1:0]data_o;//data output
+input wr_valid,rd_valid;//valid signals
+output reg fifo_full,fifo_empty,error;//flags,error-indicates both underflow & overflow  
 integer i;
 
 
-reg [PTR_WIDTH-1:0]wr_ptr;
+reg [PTR_WIDTH-1:0]wr_ptr;//ptr signals act as address of fifo
+ 
 reg [PTR_WIDTH-1:0]rd_ptr;
 reg wr_t_f,rd_t_f;
 
+//respective toggle flags for write and read clks
 reg wr_t_f_rd_clk,rd_t_f_wr_clk;
+
 //reg [PTR_WIDTH-1:0]wr_ptr_rd_clk;
 //reg [PTR_WIDTH-1:0]rd_ptr_wr_clk;
+
+//Gray counter is used to avoid glitch of multiple bit switching, when
+//synthesized
 reg [PTR_WIDTH-1:0]wr_ptr_gray_rd_clk;
 reg [PTR_WIDTH-1:0]rd_ptr_gray_wr_clk;
 reg [PTR_WIDTH-1:0]wr_ptr_gray;
@@ -29,11 +35,11 @@ reg [PTR_WIDTH-1:0]rd_ptr_gray;
 
 
 
-reg[WIDTH-1:0]mem[DEPTH-1:0];
+reg[WIDTH-1:0]mem[DEPTH-1:0];//FIFO model
 
 always@(posedge wr_clk)
     begin
-        if(rst)
+        if(rst)//Reset every reg & outputs 
         begin
         data_o=0;
         fifo_full=0;
@@ -55,20 +61,26 @@ always@(posedge wr_clk)
         else     //rst==0
         begin
             error=0;
-            if(wr_valid)
+            if(wr_valid)//indicates write operation is about to perform
+ 
                 begin
-                    if(fifo_full) begin
-                        error=1;
+                    if(fifo_full) begin//check if fifo is full?
+ 
+                        error=1;//indicates OVERFLOW(writing to full fifo)
+ 
                     end
                     else
                     begin
                         mem[wr_ptr]=data_i;
-                        if(wr_ptr==DEPTH-1)
+                        if(wr_ptr==DEPTH-1)//check if ptr is @last location of fifo??
+ 
                         begin
+                            //Toggles flag,whose combination with rd_t_f generates empty/full condition
                             wr_t_f=~wr_t_f;
                           //  wr_ptr=0;
                         end
-                            wr_ptr=wr_ptr+1; 
+                            wr_ptr=wr_ptr+1;//if not??, just increment ptr 
+                        //convert ptr to gray code 
                         wr_ptr_gray={wr_ptr[3],wr_ptr[3:1]^wr_ptr[2:0]};
                     end //else
                 end //wr_valid
@@ -123,7 +135,7 @@ begin
 end
 end
 
-always@(*)
+always@(*)//combinational block to generate empty & full condition in fifo 
 begin
     fifo_full=0;
 if(wr_ptr_gray==rd_ptr_gray_wr_clk && wr_t_f!=rd_t_f_wr_clk)
