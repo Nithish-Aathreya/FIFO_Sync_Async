@@ -1,5 +1,6 @@
 `include"async.v"
-
+//Testbench of async fifo is almost same except applying of write and read
+//clock
 module tb;
 
 parameter WIDTH=8;
@@ -18,13 +19,13 @@ reg[200:1]testname;
 
 async dut(wr_clk,rd_clk, rst, data_i, data_o, wr_valid, rd_valid, fifo_full, fifo_empty, error);
 
-initial
+initial//generation of write clock
 begin
     wr_clk=0;
     forever #7 wr_clk=~wr_clk;
 end
 
-initial
+initial //generation of read clock
 begin
     rd_clk=0;
     forever #5 rd_clk=~rd_clk;
