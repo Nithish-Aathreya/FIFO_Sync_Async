@@ -7,7 +7,11 @@ parameter DEPTH=16;
 parameter PTR_WIDTH=$clog2(DEPTH); 
 
 //declarations of signals
+<<<<<<< HEAD
 reg clk,rst;
+=======
+reg clk,rst;s
+>>>>>>> c9db299688a92a8370dd4c2abcdf68bdf7413b2b
 reg[WIDTH-1:0]data_i;
 wire[WIDTH-1:0]data_o;
 reg wr_valid,rd_valid;
